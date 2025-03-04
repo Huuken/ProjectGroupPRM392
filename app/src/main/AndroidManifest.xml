@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FreshFoldLaundryCare"
+        tools:targetApi="31">
+        <activity
+            android:name=".CardPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ViewFeedbackActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FreshFoldLaundryCare" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ViewServiceRequestedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ViewAllOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectPaymentMehodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ServiceListsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AddServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DryCleaningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WashIronActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IronServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SetupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

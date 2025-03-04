@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/_14ssp"
+    tools:context=".fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_4ssp"
+            android:src="@drawable/ic_location" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8ssp"
+            android:layout_toEndOf="@id/locationIcon"
+            android:layout_centerVertical="true"
+            android:paddingVertical="@dimen/_6sdp"
+            android:fontFamily="@font/nunito_semibold"
+            android:letterSpacing=".1"
+            android:id="@+id/addressText"
+            android:text="Click to update address"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8ssp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Discover"
+        android:textColor="@color/dark_late_gray"
+        android:textSize="@dimen/_18sdp" />
+
+    <TextView
+        android:id="@+id/title_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="-5dp"
+        android:fontFamily="@font/nunito_black"
+        android:text="Laundry Service"
+        android:textColor="@color/dark_late_gray"
+        android:textSize="@dimen/_20sdp" />
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/button_filter"
+        android:background="@drawable/bg_search"
+        android:gravity="center_vertical">
+
+        <SearchView
+            android:id="@+id/search_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="Search Services"
+            android:searchIcon="@drawable/ic_search_services"
+            android:theme="@style/SearchView"
+            app:queryBackground="@android:color/transparent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/choose_services"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/nunito_black"
+        android:text="Choose Services"
+        android:textColor="@color/dark_late_gray"
+        android:textSize="@dimen/_13ssp"/>
+
+    <LinearLayout
+        android:id="@+id/container_choose_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/choose_services"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        tools:ignore="RtlSymmetry">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/ironService"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_item_choose_services"
+                android:padding="10dp"
+                android:src="@drawable/ic_iron"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image_1"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Ironing"
+                android:textAlignment="center"
+                android:textColor="@color/dark_late_gray"
+                android:textSize="@dimen/_10ssp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/washIronService"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_item_choose_services"
+                android:padding="15dp"
+                android:src="@drawable/ic_washing_machine"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image_2"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/wash_and_iron"
+                android:textAlignment="center"
+                android:textColor="@color/dark_late_gray"
+                android:textSize="@dimen/_10ssp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/dryCleaningService"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_item_choose_services"
+                android:padding="15dp"
+                android:src="@drawable/ic_shirt"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image_3"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Dry Cleaning"
+                android:textAlignment="center"
+                android:textColor="@color/dark_late_gray"
+                android:textSize="@dimen/_10ssp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/container_choose_service">
+
+        <TextView
+            android:id="@+id/recommended"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_black"
+            android:text="Recommended"
+            android:textColor="@color/dark_late_gray"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_recommended"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/recommended"
+            android:clipToPadding="false"/>
+    </RelativeLayout>
+
+</LinearLayout>
