@@ -28,9 +28,11 @@ public class AdminMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Khởi tạo View Binding
         binding = ActivityAdminMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Khởi tạo Firebase Authentication và Firestore
         mAuth = FirebaseAuth.getInstance();
         dialog = new ProgressDialog(this);
         usersRef = db.collection("Users");
@@ -66,6 +68,21 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ViewFeedbackActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.viewServiceImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ViewServicesActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.viewServiceText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ViewServicesActivity.class);
                 startActivity(intent);
             }
         });
