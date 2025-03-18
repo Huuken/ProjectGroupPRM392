@@ -101,10 +101,14 @@ public class ViewServicesActivity extends AppCompatActivity {
                             // Hiển thị nút xóa (nếu cần)
                             holder.removeServiceBtn.setVisibility(View.VISIBLE);
 
-                            // Sự kiện cho nút thêm dịch vụ
-                            // Sự kiện cho nút thêm dịch vụ: Chuyển sang AddServiceActivity
-                            holder.addServiceIcon.setOnClickListener(v -> {
+                            // Sự kiện cho nút chỉnh sửa (trước đây là thêm): Chuyển sang AddServiceActivity với dữ liệu
+                            holder.updateServiceIcon.setOnClickListener(v -> {
                                 Intent intent = new Intent(ViewServicesActivity.this, AddServiceActivity.class);
+                                intent.putExtra("serviceCloth", model.getServiceCloth());
+                                intent.putExtra("servicePrice", model.getServicePrice());
+                                intent.putExtra("serviceType", model.getServiceType());
+                                intent.putExtra("serviceID", model.getServiceID());
+                                intent.putExtra("isUpdate", true); // Chuyển sang chế độ cập nhật
                                 startActivity(intent);
                             });
 
@@ -124,9 +128,15 @@ public class ViewServicesActivity extends AppCompatActivity {
                                         });
                             });
 
-                            // Sự kiện khi nhấp vào item (tùy chọn)
+                            // Sự kiện khi nhấp vào item: Chuyển sang AddServiceActivity để cập nhật
                             holder.itemView.setOnClickListener(v -> {
-                                Toast.makeText(ViewServicesActivity.this, "Clicked on " + model.getServiceCloth(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ViewServicesActivity.this, AddServiceActivity.class);
+                                intent.putExtra("serviceCloth", model.getServiceCloth());
+                                intent.putExtra("servicePrice", model.getServicePrice());
+                                intent.putExtra("serviceType", model.getServiceType());
+                                intent.putExtra("serviceID", model.getServiceID());
+                                intent.putExtra("isUpdate", true); // Cờ để phân biệt thêm mới hay cập nhật
+                                startActivity(intent);
                             });
                         }
 
@@ -153,14 +163,14 @@ public class ViewServicesActivity extends AppCompatActivity {
 
     private class ServiceViewHolder extends RecyclerView.ViewHolder {
         TextView serviceCloth, servicePrice;
-        ImageView serviceIcon, addServiceIcon, removeServiceBtn;
+        ImageView serviceIcon, updateServiceIcon, removeServiceBtn;
 
         public ServiceViewHolder(@NonNull View itemView) {
             super(itemView);
             serviceCloth = itemView.findViewById(R.id.serviceCloth);
             servicePrice = itemView.findViewById(R.id.servicePrice);
             serviceIcon = itemView.findViewById(R.id.serviceIcon);
-            addServiceIcon = itemView.findViewById(R.id.addServiceIcon);
+            updateServiceIcon = itemView.findViewById(R.id.updateServiceIcon);
             removeServiceBtn = itemView.findViewById(R.id.removeServiceBtn);
         }
     }
