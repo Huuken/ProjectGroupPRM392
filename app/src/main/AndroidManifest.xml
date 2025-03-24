@@ -30,6 +30,9 @@
             android:name=".admin.ViewServiceRequestedActivity"
             android:exported="false" />
         <activity
+            android:name=".admin.ViewServicesActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.ViewAllOrdersActivity"
             android:exported="false" />
         <activity

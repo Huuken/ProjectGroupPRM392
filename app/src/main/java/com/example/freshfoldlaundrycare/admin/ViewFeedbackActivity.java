@@ -43,6 +43,7 @@ public class ViewFeedbackActivity extends AppCompatActivity {
         cartRef = db.collection("Cart");
         feedbackRef = db.collection("Feedback");
 
+        //Thiết lập RecyclerView
         binding.newFeedbackRecyclerView.setHasFixedSize(true);
         binding.newFeedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -242,6 +242,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/viewServiceImage"
                     android:layout_width="@dimen/_75sdp"
                     android:layout_height="@dimen/_75sdp"
                     android:layout_marginTop="@dimen/_8ssp"
