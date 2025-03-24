@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_orders,
                 R.id.nav_feedback,
                 R.id.nav_contact,
-                R.id.nav_help
+                R.id.nav_help,
+                R.id.nav_location
         ).setOpenableLayout(drawerLayout)
                 .build();
 

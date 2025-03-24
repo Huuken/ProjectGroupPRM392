@@ -35,4 +35,9 @@
         android:name="com.example.freshfoldlaundrycare.fragments.FeedbackFragment"
         android:label="Feedback"
         tools:layout="@layout/fragment_feedback" />
+    <fragment
+        android:id="@+id/nav_location"
+        android:name="com.example.freshfoldlaundrycare.fragments.LocationFragment"
+        android:label="Location"
+        tools:layout="@layout/fragment_location" />
 </navigation>

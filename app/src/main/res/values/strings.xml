@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">GoLaundary</string>
+
+    <string name="API_key">AIzaSyClfwK1p1GQwS9MNBvbnxCwVWK0pSM0Djg</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">open navigation</string>
