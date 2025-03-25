@@ -48,17 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                     loadingBar.setTitle("please wait...");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                                loadingBar.dismiss();
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            loadingBar.dismiss();
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }

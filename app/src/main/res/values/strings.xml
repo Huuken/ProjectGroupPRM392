@@ -10,6 +10,8 @@
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
     <string name="wash_and_iron"><![CDATA[Wash & Iron]]></string>
+    <string name="channel_name">Channel 1</string>
+    <string name="channel_description">This is channel 1</string>
 
     <string-array name="service_type">
         <item>Iron</item>

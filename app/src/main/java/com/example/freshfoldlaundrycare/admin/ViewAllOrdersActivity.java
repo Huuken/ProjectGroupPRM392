@@ -109,14 +109,14 @@ public class ViewAllOrdersActivity extends AppCompatActivity {
                                     builder.setNegativeButton("Update Status", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            ordersRef.document(model.getUserID()).update("OrderStatus", "Completed").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()){
-                                                        ordersRef.document(model.getUserID()).delete();
-                                                    }
-                                                }
-                                            });
+                                            ordersRef.document(model.getOrderID()).update("OrderStatus", "Completed");//.addOnCompleteListener(new OnCompleteListener<Void>() {
+////                                                @Override
+////                                                public void onComplete(@NonNull Task<Void> task) {
+////                                                    if (task.isSuccessful()){
+////                                                        ordersRef.document(model.getUserID()).delete();
+////                                                    }
+////                                                }
+//                                            });
                                         }
                                     });
 
