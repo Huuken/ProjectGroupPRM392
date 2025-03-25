@@ -1,6 +1,11 @@
 package com.example.freshfoldlaundrycare;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,6 +27,8 @@ import com.example.freshfoldlaundrycare.auth.LoginActivity;
 import com.example.freshfoldlaundrycare.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +41,17 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     AppBarConfiguration appBarConfiguration;
     FirebaseAuth mAuth;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     String userId;
     //FirebaseFirestore db = FirebaseFirestore.getInstance();
     //CollectionReference usersRef;
     ActivityMainBinding binding;
+
+    CollectionReference cartRef;
+
+    private static final int NOTIFICATION_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.bringToFront();
 
+        cartRef = db.collection("Orders").document(userId).collection("Orders");
+
+
+        if(cartRef != null) {
+            sendNotification();
+        }
+
         tv_logout_header = navView.findViewById(R.id.tv_logout_header);
+
         tv_logout_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -108,4 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void sendNotification(){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        Notification notification = new NotificationCompat.Builder(this, NotificationActivity.CHANNEL_ID)
+                .setContentTitle("Notification From Your Cart !")
+                .setContentText("Please check your order please...")
+                .setSmallIcon(R.drawable.ic_help)
+                .setColor(getResources().getColor(R.color.primaryDark))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, notification);
+    }
 }

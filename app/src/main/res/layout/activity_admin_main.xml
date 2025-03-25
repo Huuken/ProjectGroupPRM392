@@ -27,26 +27,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_item_rounded"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:padding="@dimen/_16sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_4sdp"
+                android:elevation="4dp">
 
+                <!-- Icon for Total Orders -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_support"
+                    android:tint="@color/white"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+                <!-- Title: Total Orders -->
                 <TextView
                     android:id="@+id/totalOrdersTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8ssp"
                     android:text="Total Orders"
-                    android:textColor="@color/primaryDark"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/_4sdp"/>
 
+                <!-- Value: Total Orders Count -->
                 <TextView
                     android:id="@+id/totalOrdersValueTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_8ssp"
                     android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -65,26 +81,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_item_rounded"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:padding="@dimen/_16sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_4sdp"
+                android:elevation="4dp">
 
+                <!-- Icon for Active Users -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_user"
+                    android:tint="@color/white"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+                <!-- Title: Active Users -->
                 <TextView
                     android:id="@+id/activeUsersTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8ssp"
                     android:text="Active Users"
-                    android:textColor="@color/primaryDark"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/_4sdp"/>
 
+                <!-- Value: Active Users Count -->
                 <TextView
                     android:id="@+id/activeUsersValueTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_8ssp"
                     android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -126,7 +158,7 @@
                 <TextView
                     android:id="@+id/viewOrdersText"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_marginVertical="@dimen/_8ssp"
                     android:fontFamily="@font/belleza"
                     android:onClick="goToAllOrders"
@@ -268,14 +300,21 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logoutBtn"
-        style="@style/Widget.Material3.Button.IconButton.Outlined"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_12ssp"
-        android:paddingEnd="@dimen/_20sdp"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:paddingVertical="@dimen/_8sdp"
         android:text="Logout"
+        android:textColor="@color/primaryDark"
+        app:cornerRadius="12dp"
+        app:strokeColor="@color/primaryDark"
+        app:strokeWidth="1dp"
         app:icon="@drawable/logout"
-        app:iconPadding="@dimen/_14ssp" />
+        app:iconPadding="@dimen/_8sdp"
+        app:iconTint="@color/primaryDark"
+        app:backgroundTint="@android:color/white"/>
 
 </LinearLayout>

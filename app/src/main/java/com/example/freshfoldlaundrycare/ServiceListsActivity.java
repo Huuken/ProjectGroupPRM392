@@ -87,7 +87,7 @@ public class ServiceListsActivity extends AppCompatActivity {
                             holder.servicePrice.setText("Rs. " + model.getServicePrice() + " /-");
 
                             if (serviceTitle.equals("Iron")) {
-                                Glide.with(getApplicationContext()).load(R.drawable.ic_iron).into(holder.serviceIcon);
+                                Glide.with(getApplicationContext()).load(R.drawable.item_blanket).into(holder.serviceIcon);
                             } else if (serviceTitle.equals("Wash Iron")) {
                                 Glide.with(getApplicationContext()).load(R.drawable.ic_washing_machine).into(holder.serviceIcon);
                             } else {
@@ -109,7 +109,7 @@ public class ServiceListsActivity extends AppCompatActivity {
                             });
 
                             //holder.productPriceCard.setText("Rs. " + model.getProdPrice() + " /-");
-                            holder.addServiceIcon.setOnClickListener(new View.OnClickListener() {
+                            holder.serviceIcon.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
@@ -158,26 +158,26 @@ public class ServiceListsActivity extends AppCompatActivity {
                                 }
                             });
 
-                            holder.removeCartBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    cartRef.document(currentUserId).collection("Cart").document(model.getServiceID()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                dialog.dismiss();
-                                                Toast.makeText(getApplicationContext(), "Removed", Toast.LENGTH_SHORT).show();
-                                                holder.addCard.setVisibility(View.VISIBLE);
-                                                holder.removeCard.setVisibility(View.GONE);
-                                            } else {
-                                                String msg = task.getException().getMessage();
-                                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                }
-                            });
+//                            holder.removeCartBtn.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    cartRef.document(currentUserId).collection("Cart").document(model.getServiceID()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            if (task.isSuccessful()) {
+//                                                dialog.dismiss();
+//                                                Toast.makeText(getApplicationContext(), "Removed", Toast.LENGTH_SHORT).show();
+//                                                holder.addCard.setVisibility(View.VISIBLE);
+//                                                holder.removeCard.setVisibility(View.GONE);
+//                                            } else {
+//                                                String msg = task.getException().getMessage();
+//                                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//                                                dialog.dismiss();
+//                                            }
+//                                        }
+//                                    });
+//                                }
+//                            });
 
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -207,22 +207,21 @@ public class ServiceListsActivity extends AppCompatActivity {
         });
     }
 
-    private class ServicesHolder extends RecyclerView.ViewHolder {
-
+    public class ServicesHolder extends RecyclerView.ViewHolder {
         TextView serviceCloth, servicePrice;
-        ImageView serviceIcon, addServiceIcon, removeCartBtn;
+        ImageView serviceIcon, updateServiceIcon; // Updated
         CardView addCard, removeCard;
+        ImageView removeServiceBtn; // Updated
 
         public ServicesHolder(@NonNull View itemView) {
             super(itemView);
-
             serviceCloth = itemView.findViewById(R.id.serviceCloth);
             servicePrice = itemView.findViewById(R.id.servicePrice);
             serviceIcon = itemView.findViewById(R.id.serviceIcon);
-            addServiceIcon = itemView.findViewById(R.id.addServiceIcon);
-            removeCartBtn = itemView.findViewById(R.id.removeServiceBtn);
-            removeCard = itemView.findViewById(R.id.removeCard);
+            updateServiceIcon = itemView.findViewById(R.id.updateServiceIcon); // Matches XML
             addCard = itemView.findViewById(R.id.addCard);
+            removeCard = itemView.findViewById(R.id.removeCard);
+            removeServiceBtn = itemView.findViewById(R.id.removeServiceBtn); // Matches XML
         }
     }
 }
