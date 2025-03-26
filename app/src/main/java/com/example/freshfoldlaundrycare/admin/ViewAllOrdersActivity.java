@@ -1,5 +1,6 @@
 package com.example.freshfoldlaundrycare.admin;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,6 +73,7 @@ public class ViewAllOrdersActivity extends AppCompatActivity {
                     Query query = ordersRef.orderBy("OrderDate", Query.Direction.ASCENDING);
                     FirestoreRecyclerOptions<Orders> options = new FirestoreRecyclerOptions.Builder<Orders>().setQuery(query, Orders.class).build();
                     FirestoreRecyclerAdapter<Orders, OrdersViewHolder> fireAdapter = new FirestoreRecyclerAdapter<Orders, OrdersViewHolder>(options) {
+                        @SuppressLint("ResourceAsColor")
                         @Override
                         protected void onBindViewHolder(@NonNull OrdersViewHolder holder, int position, @NonNull Orders model) {
                             holder.orderDate.setText(model.getOrderDate());
@@ -78,6 +81,11 @@ public class ViewAllOrdersActivity extends AppCompatActivity {
                             holder.orderUserAddress.setText(model.getAddress());
                             holder.orderUserName.setText(model.getName());
                             holder.orderStatus.setText(model.getOrderStatus());
+                            if (model.getOrderStatus().equals("Completed")) {
+                                holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.green));
+                            } else {
+                                holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
+                            }
 
                             CollectionReference productsRef = db.collection("Orders").document(model.getUserID()).collection("Products");
                             productsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

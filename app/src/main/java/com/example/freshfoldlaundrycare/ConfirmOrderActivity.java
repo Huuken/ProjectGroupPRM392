@@ -1,6 +1,7 @@
 package com.example.freshfoldlaundrycare;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.freshfoldlaundrycare.auth.LoginActivity;
 import com.example.freshfoldlaundrycare.databinding.ActivityConfirmOrderBinding;
 import com.example.freshfoldlaundrycare.helper.UniqueIdGenerator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -138,6 +140,24 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                     if (!queryDocumentSnapshots.isEmpty()) {
+                                        int totalQuantity = 0; // Đếm tổng số lượng sản phẩm
+
+                                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                            long quantity = document.getLong("Quantity");
+                                            totalQuantity += quantity;
+                                        }
+
+                                        // Cập nhật Quantity vào thông tin đơn hàng
+                                        orderData.put("Quantity", totalQuantity);
+
+                                        // 🔹 Lưu đơn hàng mới vào Firestore
+                                        ordersRef.document(orderID).set(orderData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(ConfirmOrderActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                             String productId = document.getString("ProductId");
                                             String productName = document.getString("ProductName");
@@ -166,6 +186,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(ConfirmOrderActivity.this, "Cart is empty", Toast.LENGTH_SHORT).show();
                                     }
+                                    Intent intent = new Intent(ConfirmOrderActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
                         }

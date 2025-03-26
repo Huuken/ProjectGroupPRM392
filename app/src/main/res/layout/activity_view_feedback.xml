@@ -63,7 +63,8 @@
             android:id="@+id/newFeedbackRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/topContent" />
+            android:layout_below="@id/topContent"
+            android:layout_marginTop="-1dp" />
 
     </RelativeLayout>
 
