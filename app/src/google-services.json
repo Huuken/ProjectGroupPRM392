@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "433206358619",
-    "project_id": "freshfold-laundry-care",
-    "storage_bucket": "freshfold-laundry-care.appspot.com"
+    "project_number": "148832185405",
+    "project_id": "prm-project-83ca0",
+    "storage_bucket": "prm-project-83ca0.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:433206358619:android:2d2d007d0d15369bf0c57e",
+        "mobilesdk_app_id": "1:148832185405:android:dfb6091f81de324f160e54",
         "android_client_info": {
           "package_name": "com.example.freshfoldlaundrycare"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCbxeQ38JaBRzUiQQ_7zQDgosj1TlyeK8A"
+          "current_key": "AIzaSyAjmqJTXfriU7_uKqWqDKZ2Gh9DNwgNWEQ"
         }
       ],
       "services": {
