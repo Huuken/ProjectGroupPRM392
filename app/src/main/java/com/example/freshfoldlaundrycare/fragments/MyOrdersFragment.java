@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.freshfoldlaundrycare.Modal.Orders;
 import com.example.freshfoldlaundrycare.R;
+import com.example.freshfoldlaundrycare.ViewOrderDetailActivity;
 import com.example.freshfoldlaundrycare.admin.ViewServiceRequestedActivity;
 import com.example.freshfoldlaundrycare.databinding.FragmentMyOrdersBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -77,7 +79,18 @@ public class MyOrdersFragment extends Fragment {
                         protected void onBindViewHolder(@NonNull UsersOrdersViewHolder holder, int position, @NonNull Orders model) {
                             holder.orderDate.setText(model.getOrderDate());
                             holder.orderID.setText(model.getOrderID());
+
+                            holder.orderID.setOnClickListener(v -> {
+                                Intent intent = new Intent(holder.itemView.getContext(), ViewOrderDetailActivity.class);
+                                intent.putExtra("ORDER_ID", model.getOrderID()); // Truyền Order ID sang Activity mới
+                                holder.itemView.getContext().startActivity(intent);
+                            });
                             holder.orderStatus.setText(model.getOrderStatus());
+                            if (model.getOrderStatus().equals("Completed")) {
+                                holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.green));
+                            } else {
+                                holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
+                            }
 
                             CollectionReference productsRef = db.collection("Users").document(model.getUserID()).collection("Products");
                             productsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
