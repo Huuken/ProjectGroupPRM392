@@ -23,81 +23,78 @@ import java.util.HashMap;
 
 public class AddServiceActivity extends AppCompatActivity {
 
-    ActivityAddServiceBinding binding;
-    ProgressDialog loadingBar;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference serviceRef;
-    private boolean isUpdate = false;
-    private String serviceID;
-
+    ActivityAddServiceBinding binding; // View Binding instance
+    ProgressDialog loadingBar; // Progress dialog for loading indication
+    FirebaseFirestore db = FirebaseFirestore.getInstance(); // Firestore database instance
+    CollectionReference serviceRef; // Reference to "Services" collection in Firestore
+    private boolean isUpdate = false; // Flag to check if updating an existing service
+    private String serviceID; // ID of the service being updated
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Khởi tạo View Binding truy cập trực tiếp vào các thành phần UI trong XML layout (activity_add_service.xml).
-        binding = ActivityAddServiceBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        binding = ActivityAddServiceBinding.inflate(getLayoutInflater()); // Initialize View Binding
+        setContentView(binding.getRoot()); // Set the content view
 
-        //Khởi tạo Firestore
-        loadingBar = new ProgressDialog(this);
-        serviceRef = db.collection("Services");
+        loadingBar = new ProgressDialog(this); // Initialize ProgressDialog
+        serviceRef = db.collection("Services"); // Get reference to "Services" collection
 
-        //Thiết lập Spinner (Dropdown menu)
+        // Setup Spinner with service types from resources
         ArrayAdapter<CharSequence> adapter4Category = ArrayAdapter.createFromResource(this, R.array.service_type, android.R.layout.simple_spinner_item);
         adapter4Category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.serviceTypeSpinner.setAdapter(adapter4Category);
         binding.serviceTypeSpinner.setOnItemSelectedListener(new TypeServiceSpinner());
 
-        Intent intent = getIntent();
-        isUpdate = intent.getBooleanExtra("isUpdate", false);
+        Intent intent = getIntent(); // Get intent data
+        isUpdate = intent.getBooleanExtra("isUpdate", false); // Check if it is an update operation
+
         if (isUpdate) {
-            // Điền dữ liệu từ Intent vào các trường
+            // Populate fields with existing service data
             binding.serviceCloth.getEditText().setText(intent.getStringExtra("serviceCloth"));
             binding.servicePrice.getEditText().setText(intent.getStringExtra("servicePrice"));
             String serviceType = intent.getStringExtra("serviceType");
             serviceID = intent.getStringExtra("serviceID");
 
-            // Đặt giá trị mặc định cho Spinner
+            // Set default selection for Spinner
             if (serviceType != null) {
                 int spinnerPosition = adapter4Category.getPosition(serviceType);
                 binding.serviceTypeSpinner.setSelection(spinnerPosition);
                 binding.serviceTypeText.setText(serviceType);
             }
-            setTitle("Update Service"); // Thay đổi tiêu đề
-            binding.addServiceButton.setText("Update"); // Thay đổi văn bản nút
+            setTitle("Update Service"); // Set activity title
+            binding.addServiceButton.setText("Update"); // Change button text
         } else {
-            setTitle("Add New Service");
-            binding.addServiceButton.setText("Add");
+            setTitle("Add New Service"); // Set title for new service
+            binding.addServiceButton.setText("Add"); // Set button text for new service
         }
 
         binding.addServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lấy dữ liệu từ các trường nhập liệu
+                // Retrieve input values
                 String serviceCloth = binding.serviceCloth.getEditText().getText().toString().trim();
                 String servicePrice = binding.servicePrice.getEditText().getText().toString().trim();
                 String serviceType = binding.serviceTypeText.getText().toString().trim();
-                //String serviceID = UniqueIdGenerator.generateServiceID();
 
-                // Kiểm tra dữ liệu đầu vào
+                // Validate inputs
                 if (serviceCloth.isEmpty() || servicePrice.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please add data!", Toast.LENGTH_SHORT).show();
                 } else if (serviceType.equals("NA")) {
                     Toast.makeText(getApplicationContext(), "Please select service type!", Toast.LENGTH_SHORT).show();
                 } else {
-                    loadingBar.setMessage("please wait...");
+                    loadingBar.setMessage("Please wait..."); // Show loading message
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
 
-                    HashMap<String, Object> usersMap = new HashMap<>();
+                    HashMap<String, Object> usersMap = new HashMap<>(); // Create data map
                     usersMap.put("ServiceCloth", serviceCloth);
                     usersMap.put("ServicePrice", servicePrice);
                     usersMap.put("ServiceType", serviceType);
                     usersMap.put("ServiceID", serviceID);
-                    // Lưu dữ liệu vào Firestore
+
                     if (isUpdate && serviceID != null) {
-                        // Cập nhật dịch vụ
-                        usersMap.put("ServiceID", serviceID); // Giữ nguyên ServiceID
+                        // Update existing service
+                        usersMap.put("ServiceID", serviceID);
                         serviceRef.document(serviceID).set(usersMap)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -107,7 +104,7 @@ public class AddServiceActivity extends AppCompatActivity {
                                             loadingBar.dismiss();
                                             Intent intent = new Intent(AddServiceActivity.this, ViewServicesActivity.class);
                                             startActivity(intent);
-                                            finish(); // Thoát Activity sau khi cập nhật
+                                            finish(); // Close activity after update
                                         } else {
                                             String msg = task.getException().getMessage();
                                             Toast.makeText(getApplicationContext(), "Error: " + msg, Toast.LENGTH_SHORT).show();
@@ -116,7 +113,7 @@ public class AddServiceActivity extends AppCompatActivity {
                                     }
                                 });
                     } else {
-                        // Thêm dịch vụ mới
+                        // Add new service
                         String newServiceID = UniqueIdGenerator.generateServiceID();
                         usersMap.put("ServiceID", newServiceID);
                         serviceRef.document(newServiceID).set(usersMap)
@@ -126,10 +123,13 @@ public class AddServiceActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getApplicationContext(), "Service Added!", Toast.LENGTH_SHORT).show();
                                             loadingBar.dismiss();
+
+                                            // Reset input fields
                                             binding.serviceCloth.getEditText().setText("");
                                             binding.servicePrice.getEditText().setText("");
-                                            binding.serviceTypeSpinner.setSelection(0); // Reset Spinner về NA
+                                            binding.serviceTypeSpinner.setSelection(0); // Reset Spinner to default
                                             binding.serviceCloth.requestFocus();
+
                                             Intent intent = new Intent(AddServiceActivity.this, AdminMainActivity.class);
                                             startActivity(intent);
                                         } else {
@@ -143,18 +143,19 @@ public class AddServiceActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private class TypeServiceSpinner implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            // Update selected service type text
             String itemSpinner = parent.getItemAtPosition(position).toString();
             binding.serviceTypeText.setText(itemSpinner);
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+            // Default to "NA" if nothing is selected
             binding.serviceTypeText.setText("NA");
         }
     }

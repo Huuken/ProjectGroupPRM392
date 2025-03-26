@@ -30,11 +30,22 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class ViewServicesActivity extends AppCompatActivity {
+    // View binding for accessing UI elements
     ActivityViewServicesBinding binding;
+
+    // Firebase Firestore database instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // Reference to the 'Services' collection in Firestore
     CollectionReference servicesRef;
+
+    // Progress dialog to show loading indication
     ProgressDialog dialog;
+
+    // Firebase authentication instance
     FirebaseAuth mAuth;
+
+    // Firestore Recycler Adapter for displaying data in RecyclerView
     private FirestoreRecyclerAdapter<Services, ServiceViewHolder> fireAdapter;
 
     @Override
@@ -43,20 +54,28 @@ public class ViewServicesActivity extends AppCompatActivity {
         binding = ActivityViewServicesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Initialize Firestore reference
         servicesRef = db.collection("Services");
+
+        // Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        // Setup RecyclerView
         binding.servicesRecyclerView.setHasFixedSize(true);
         binding.servicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize and show progress dialog
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please wait...");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+
+        // Start listening for data changes
         startListen();
     }
 
     private void startListen() {
+        // Fetch data from Firestore
         servicesRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot snapshot) {
@@ -64,20 +83,23 @@ public class ViewServicesActivity extends AppCompatActivity {
                     Toast.makeText(ViewServicesActivity.this, "No services found", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
-                    // Sắp xếp theo ServiceCloth
+                    // Order services by 'ServiceCloth' field in ascending order
                     Query query = servicesRef.orderBy("ServiceCloth", Query.Direction.ASCENDING);
+
+                    // Set FirestoreRecyclerOptions
                     FirestoreRecyclerOptions<Services> options = new FirestoreRecyclerOptions.Builder<Services>()
                             .setQuery(query, Services.class)
                             .build();
 
+                    // Initialize FirestoreRecyclerAdapter
                     fireAdapter = new FirestoreRecyclerAdapter<Services, ServiceViewHolder>(options) {
                         @Override
                         protected void onBindViewHolder(@NonNull ServiceViewHolder holder, int position, @NonNull Services model) {
-                            // Hiển thị thông tin dịch vụ
+                            // Set service name and price
                             holder.serviceCloth.setText(model.getServiceCloth());
                             holder.servicePrice.setText("Rs. " + model.getServicePrice());
 
-                            // Hiển thị biểu tượng dựa trên ServiceType
+                            // Set service icon based on ServiceType
                             if (model.getServiceType() != null) {
                                 if (model.getServiceType().equals("Iron")) {
                                     Glide.with(ViewServicesActivity.this)
@@ -98,21 +120,21 @@ public class ViewServicesActivity extends AppCompatActivity {
                                         .into(holder.serviceIcon);
                             }
 
-                            // Hiển thị nút xóa (nếu cần)
+                            // Set delete button visibility
                             holder.removeServiceBtn.setVisibility(View.VISIBLE);
 
-                            // Sự kiện cho nút chỉnh sửa (trước đây là thêm): Chuyển sang AddServiceActivity với dữ liệu
+                            // Handle update button click event
                             holder.updateServiceIcon.setOnClickListener(v -> {
                                 Intent intent = new Intent(ViewServicesActivity.this, AddServiceActivity.class);
                                 intent.putExtra("serviceCloth", model.getServiceCloth());
                                 intent.putExtra("servicePrice", model.getServicePrice());
                                 intent.putExtra("serviceType", model.getServiceType());
                                 intent.putExtra("serviceID", model.getServiceID());
-                                intent.putExtra("isUpdate", true); // Chuyển sang chế độ cập nhật
+                                intent.putExtra("isUpdate", true);
                                 startActivity(intent);
                             });
 
-                            // Sự kiện cho nút xóa dịch vụ
+                            // Handle delete button click event
                             holder.removeServiceBtn.setOnClickListener(v -> {
                                 if (model.getServiceID() == null) {
                                     Toast.makeText(ViewServicesActivity.this, "Service ID is missing", Toast.LENGTH_SHORT).show();
@@ -127,17 +149,6 @@ public class ViewServicesActivity extends AppCompatActivity {
                                             Toast.makeText(ViewServicesActivity.this, "Error removing service: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         });
                             });
-
-                            // Sự kiện khi nhấp vào item: Chuyển sang AddServiceActivity để cập nhật
-                            holder.itemView.setOnClickListener(v -> {
-                                Intent intent = new Intent(ViewServicesActivity.this, AddServiceActivity.class);
-                                intent.putExtra("serviceCloth", model.getServiceCloth());
-                                intent.putExtra("servicePrice", model.getServicePrice());
-                                intent.putExtra("serviceType", model.getServiceType());
-                                intent.putExtra("serviceID", model.getServiceID());
-                                intent.putExtra("isUpdate", true); // Cờ để phân biệt thêm mới hay cập nhật
-                                startActivity(intent);
-                            });
                         }
 
                         @NonNull
@@ -147,6 +158,8 @@ public class ViewServicesActivity extends AppCompatActivity {
                             return new ServiceViewHolder(view);
                         }
                     };
+
+                    // Set adapter and start listening for changes
                     binding.servicesRecyclerView.setAdapter(fireAdapter);
                     fireAdapter.startListening();
                     dialog.dismiss();
